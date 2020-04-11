@@ -18,7 +18,9 @@ jobs:
       with:
         dotnet-version: 3.1.101
     - name: Install dependencies
-      run: dotnet restore ./ClassLibrary1
+      run: |
+        cat ./ClassLibrary1/nuget.config
+        dotnet restore ./ClassLibrary1
     - name: Build
       run: dotnet build ./ClassLibrary1 --configuration Release --no-restore
     - name: Test
