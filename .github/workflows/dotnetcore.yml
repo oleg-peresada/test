@@ -31,5 +31,6 @@ jobs:
         export a='gkgk'+${{ secrets.nuget_user }}
         echo a
         cd ./ClassLibrary1
+        envsubst < 'nuget.config' | tee 'nuget.config'
         dotnet pack -c Release
         dotnet nuget push **/*.nupkg -s "github" -k ${{ secrets.nuget_user }}
