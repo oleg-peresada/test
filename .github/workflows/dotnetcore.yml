@@ -29,6 +29,5 @@ jobs:
     - name: Nuget
       run: |
         cd ./ClassLibrary1
-        cat nuget.config
         dotnet pack -c Release
-        dotnet nuget push **/*.nupkg -s "github" -k user_nuget
+        dotnet nuget push **/*.nupkg -s "github" -k ${{ secrets.nuget_user }}
