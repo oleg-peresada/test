@@ -18,18 +18,18 @@ jobs:
       with:
         dotnet-version: 3.1.101
     - name: Install dependencies
+      working-directory: ./ClassLibrary1
       run: |
         export user_nuget=${{ secrets.nuget_user }}
-        envsubst < './ClassLibrary1/nuget.config' | tee './ClassLibrary1/nuget.config'
-        dotnet restore ./ClassLibrary1
+        envsubst < 'nuget.config' | tee 'nuget.config'
+        dotnet restore
     - name: Build
-      run: dotnet build ./ClassLibrary1 --configuration Release --no-restore
+      run: dotnet build --configuration Release --no-restore
     - name: Test
-      run: dotnet test ./ClassLibrary1 --no-restore --verbosity normal
-    - name: Nuget
+      run: dotnet test --no-restore --verbosity normal
+    - name: Nuget pack
       run: |
-        export user_nuget=${{ secrets.nuget_user }}
-        cd ./ClassLibrary1
         envsubst < 'nuget.config' | tee 'nuget.config'
         dotnet pack -c Release
-        dotnet nuget push **/*.nupkg -s "github" -k ${{ secrets.nuget_user }}
+    - name: Nuget push
+      run: dotnet nuget push **/*.nupkg -s "github" -k ${{ secrets.nuget_user }}
