@@ -28,5 +28,6 @@ jobs:
       run: dotnet test ./ClassLibrary1 --no-restore --verbosity normal
     - name: Nuget
       run: |
-        dotnet pack ./ClassLibrary1
+        cd ./ClassLibrary1
+        dotnet pack -c Release
         dotnet nuget push **/*.nupkg -s "github" -k user_nuget
