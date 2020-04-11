@@ -2,6 +2,8 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
+        <PackageDescription>This package adds an Octocat!</PackageDescription>
+        <RepositoryUrl>https://github.com/oleg-peresada/test</RepositoryUrl>
     </PropertyGroup>
 
 </Project>
