@@ -20,6 +20,9 @@ jobs:
     - name: Install dependencies
       run: |
         cat ./ClassLibrary1/nuget.config
+        export user_nuget=${{ secrets.nuget_user }}
+        echo=user_nuget
+        envsubst < './ClassLibrary1/nuget.config' | tee './ClassLibrary1/nuget.config'
         dotnet restore ./ClassLibrary1
     - name: Build
       run: dotnet build ./ClassLibrary1 --configuration Release --no-restore
