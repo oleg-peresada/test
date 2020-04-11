@@ -19,12 +19,14 @@ jobs:
         dotnet-version: 3.1.101
     - name: Install dependencies
       run: |
-        cat ./ClassLibrary1/nuget.config
         export user_nuget=${{ secrets.nuget_user }}
-        echo=user_nuget
         envsubst < './ClassLibrary1/nuget.config' | tee './ClassLibrary1/nuget.config'
         dotnet restore ./ClassLibrary1
     - name: Build
       run: dotnet build ./ClassLibrary1 --configuration Release --no-restore
     - name: Test
       run: dotnet test ./ClassLibrary1 --no-restore --verbosity normal
+    - name: Nuget
+      run: |
+        dotnet pack ./ClassLibrary1
+        dotnet nuget push **/*.nupkg -s "github" -k user_nuget
