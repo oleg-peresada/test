@@ -17,19 +17,18 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.101
+        source-url: https://nuget.pkg.github.com/oleg-peresada/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{ secrets.nuget_user }}
     - name: Install dependencies
-      working-directory: ./ClassLibrary1
-      run: |
-        export user_nuget=${{ secrets.nuget_user }}
-        envsubst < 'nuget.config' | tee 'nuget.config'
-        dotnet restore
+      run: dotnet restore ./ClassLibrary1
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build ./ClassLibrary1 --configuration Release --no-restore
     - name: Test
-      run: dotnet test --no-restore --verbosity normal
+      run: dotnet test ./ClassLibrary1 --no-restore --verbosity normal
     - name: Nuget pack
       run: |
+        cd ./ClassLibrary1
         envsubst < 'nuget.config' | tee 'nuget.config'
         dotnet pack -c Release
-    - name: Nuget push
-      run: dotnet nuget push **/*.nupkg -s "github" -k ${{ secrets.nuget_user }}
+        dotnet nuget push **/*.nupkg -s "github" -k ${{ secrets.nuget_user }}
