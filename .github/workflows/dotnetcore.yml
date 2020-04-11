@@ -31,6 +31,7 @@ jobs:
       run: dotnet test ./ClassLibrary1 --no-restore --verbosity normal
     - name: Nuget pack
       run: |
+        export VERSION=$(git describe --tags --dirty)
         cd ./ClassLibrary1
         dotnet pack -c Release -p:Version=$VERSION
         dotnet nuget push **/*.nupkg
