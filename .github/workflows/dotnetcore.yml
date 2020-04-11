@@ -29,6 +29,8 @@ jobs:
       run: dotnet build ./ClassLibrary1 --configuration Release --no-restore
     - name: Test
       run: dotnet test ./ClassLibrary1 --no-restore --verbosity normal
+    - name Version
+      run: echo "::set-env name=VERSION::$(git describe --tags --dirty)"
     - name: Nuget pack
       run: |
         cd ./ClassLibrary1
