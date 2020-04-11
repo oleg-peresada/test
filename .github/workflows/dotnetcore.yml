@@ -29,7 +29,7 @@ jobs:
     - name: Nuget
       run: |
         export a='gkgk'+${{ secrets.nuget_user }}
-        echo=a
+        echo a
         cd ./ClassLibrary1
         dotnet pack -c Release
         dotnet nuget push **/*.nupkg -s "github" -k ${{ secrets.nuget_user }}
